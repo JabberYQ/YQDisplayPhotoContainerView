@@ -151,7 +151,7 @@ for (int i = 0; i<100; i++) {
 # 代码
 [github：YQDisplayPhotoContainerView](https://github.com/JabberYQ/YQDisplayPhotoContainerView)
 
-#结束
+# 结束
 最后的最后再放一个彩蛋，效果图可以看到所有图片都是占位图，那是因为在设置内部imageView的image时写死了。
 ```
 imageView.image = [UIImage imageNamed:@"placeholder"];
