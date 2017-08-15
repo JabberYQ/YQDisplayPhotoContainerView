@@ -191,6 +191,7 @@ static const CGFloat kOnePhotoNormalMaxWidth = 180.0;
     if (self.delegate && [self.delegate respondsToSelector:@selector(imageViewDidTap:)]) {
         [self.delegate imageViewDidTap:self];
     }
+    
 }
 
 - (void)setPhotoArray:(NSArray *)photoArray
