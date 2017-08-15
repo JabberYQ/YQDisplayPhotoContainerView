@@ -29,8 +29,22 @@ typedef NS_ENUM(NSUInteger, YQPhotoType) {
 @property (nonatomic, copy) NSString *picID;
 @end
 
+@class YQDisplayPhotoContainerView;
+@protocol YQDisplayViewDelegate <NSObject>
+- (void)imageViewDidTap:(YQDisplayPhotoContainerView *)displayView;
+@end
+
 @interface YQDisplayPhotoContainerView : UIView
 @property (nonatomic, strong) NSArray *photoArray;     ///<YQPhoto类型的数组
+@property (nonatomic, weak) id <YQDisplayViewDelegate> delegate;   ///<目标 用于传递点击事件
+
+/**
+ 实例方法，初始化一个实例
+ 
+ @param frame       位置尺寸.
+ @param delegate      目标 用于传递点击事件
+ */
+- (instancetype)initWithFrame:(CGRect)frame delegate:(id <YQDisplayViewDelegate>)delegate;
 
 /**
  类方法，用来计算该视图的高度 和photoArray的个数 有关

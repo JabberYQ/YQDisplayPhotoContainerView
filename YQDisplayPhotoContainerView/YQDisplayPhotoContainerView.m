@@ -146,6 +146,15 @@ static const CGFloat kOnePhotoNormalMaxWidth = 180.0;
 @end
 
 @implementation YQDisplayPhotoContainerView
+- (instancetype)initWithFrame:(CGRect)frame delegate:(id<YQDisplayViewDelegate>)delegate
+{
+    if (self = [super initWithFrame:frame]) {
+        self.delegate = delegate;
+        [self setupView];
+    }
+    return self;
+}
+
 - (instancetype)initWithFrame:(CGRect)frame
 {
     if (self = [super initWithFrame:frame]) {
@@ -166,8 +175,21 @@ static const CGFloat kOnePhotoNormalMaxWidth = 180.0;
         UIImageView *imageView = [[UIImageView alloc] init];
         imageView.frame = CGRectMake(x, y, photoWidth, photoHeight);
         imageView.hidden = YES;
+        imageView.userInteractionEnabled = YES;
         [self addSubview:imageView];
         [self.imageViewArray addObject:imageView];
+        
+    
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageViewTap:)];
+        [imageView addGestureRecognizer:tap];
+        
+    }
+}
+
+- (void)imageViewTap:(UITapGestureRecognizer *)tap
+{
+    if (self.delegate && [self.delegate respondsToSelector:@selector(imageViewDidTap:)]) {
+        [self.delegate imageViewDidTap:self];
     }
 }
 
@@ -232,6 +254,7 @@ static const CGFloat kOnePhotoNormalMaxWidth = 180.0;
     imageView.clipsToBounds = YES;
     imageView.hidden = NO;
     
+
     imageView.image = [UIImage imageNamed:@"placeholder"];
 }
 

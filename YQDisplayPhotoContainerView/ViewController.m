@@ -9,11 +9,19 @@
 #import "ViewController.h"
 #import "YQDisplayPhotoContainerView.h"
 
-@interface YQTableViewCell : UITableViewCell
+@class YQTableViewCell;
+@protocol YQTableViewCellDelegate <NSObject>
+- (void)cellImageViewDidTap:(YQDisplayPhotoContainerView *)displayView cell:(YQTableViewCell *)cell;
+@end
+
+@interface YQTableViewCell : UITableViewCell <YQDisplayViewDelegate>
 @property (nonatomic, weak) UILabel *label;  ///<这一行有%ld个图片
 @property (nonatomic, weak) YQDisplayPhotoContainerView *displayView;  ///<图片展示器
 @property (nonatomic, strong) NSArray *photoArray; ///<图片数组
+@property (nonatomic, weak) id <YQTableViewCellDelegate> delegate;
 @end
+
+
 
 @implementation YQTableViewCell
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -25,7 +33,7 @@
         self.label = label;
         
         
-        YQDisplayPhotoContainerView *display = [[YQDisplayPhotoContainerView alloc] initWithFrame:CGRectMake(0, 40, 300, 0)];
+        YQDisplayPhotoContainerView *display = [[YQDisplayPhotoContainerView alloc] initWithFrame:CGRectMake(0, 40, 300, 0) delegate:self];
         [self addSubview:display];
         self.displayView = display;
     }
@@ -45,10 +53,18 @@
     self.displayView.photoArray = photoArray;
 }
 
+#pragma mark - YQDisplayViewDelegate // 一层层传递回控制器 用的都是代理
+- (void)imageViewDidTap:(YQDisplayPhotoContainerView *)displayView
+{
+    if ([self.delegate respondsToSelector:@selector(cellImageViewDidTap:cell:)]) {
+        [self.delegate cellImageViewDidTap:displayView cell:self];
+    }
+}
+
 @end
 
 
-@interface ViewController () <UITableViewDelegate, UITableViewDataSource>
+@interface ViewController () <UITableViewDelegate, UITableViewDataSource, YQTableViewCellDelegate>
 @property (nonatomic, strong) NSMutableArray *listArray;
 @property (nonatomic, weak) UITableView *tableView;
 @end
@@ -81,12 +97,18 @@
         cell = [[YQTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
     }
     cell.photoArray = self.listArray[indexPath.row];
+    cell.delegate = self;
     return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return [YQDisplayPhotoContainerView heightForWidth:300 photoArray:self.listArray[indexPath.row]] + 40;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 - (void)getData
@@ -127,6 +149,12 @@
         _listArray = [NSMutableArray array];
     }
     return _listArray;
+}
+
+#pragma mark - YQTableViewCellDelegate
+- (void)cellImageViewDidTap:(YQDisplayPhotoContainerView *)displayView cell:(YQTableViewCell *)cell
+{
+    NSLog(@"~~~~~~~~");
 }
 
 @end
