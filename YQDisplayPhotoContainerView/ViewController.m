@@ -11,7 +11,7 @@
 
 @class YQTableViewCell;
 @protocol YQTableViewCellDelegate <NSObject>
-- (void)cellImageViewDidTap:(YQDisplayPhotoContainerView *)displayView cell:(YQTableViewCell *)cell;
+- (void)cellImageViewDidTap:(YQDisplayPhotoContainerView *)displayView cell:(YQTableViewCell *)cell tapImageView:(UIImageView *)tapImageView tapIndex:(int)tapIndex;
 @end
 
 @interface YQTableViewCell : UITableViewCell <YQDisplayViewDelegate>
@@ -54,10 +54,10 @@
 }
 
 #pragma mark - YQDisplayViewDelegate // 一层层传递回控制器 用的都是代理
-- (void)imageViewDidTap:(YQDisplayPhotoContainerView *)displayView
+- (void)imageViewDidTap:(YQDisplayPhotoContainerView *)displayView tapImageView:(UIImageView *)tapImageView tapIndex:(int)tapIndex
 {
-    if ([self.delegate respondsToSelector:@selector(cellImageViewDidTap:cell:)]) {
-        [self.delegate cellImageViewDidTap:displayView cell:self];
+    if ([self.delegate respondsToSelector:@selector(cellImageViewDidTap:cell:tapImageView:tapIndex:)]) {
+        [self.delegate cellImageViewDidTap:displayView cell:self tapImageView:tapImageView tapIndex:tapIndex];
     }
 }
 
@@ -152,9 +152,9 @@
 }
 
 #pragma mark - YQTableViewCellDelegate
-- (void)cellImageViewDidTap:(YQDisplayPhotoContainerView *)displayView cell:(YQTableViewCell *)cell
+- (void)cellImageViewDidTap:(YQDisplayPhotoContainerView *)displayView cell:(YQTableViewCell *)cell tapImageView:(UIImageView *)tapImageView tapIndex:(int)tapIndex
 {
-    NSLog(@"~~~~~~~~");
+    
 }
 
 @end

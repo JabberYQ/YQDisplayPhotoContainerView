@@ -514,6 +514,7 @@
 				DE2982B11F3BE5F800527DD6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		DE2982B21F3BE5F800527DD6 /* Build configuration list for PBXNativeTarget "YQDisplayPhotoContainerViewTests" */ = {
 			isa = XCConfigurationList;
@@ -522,6 +523,7 @@
 				DE2982B41F3BE5F800527DD6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		DE2982B51F3BE5F800527DD6 /* Build configuration list for PBXNativeTarget "YQDisplayPhotoContainerViewUITests" */ = {
 			isa = XCConfigurationList;
@@ -530,6 +532,7 @@
 				DE2982B71F3BE5F800527DD6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

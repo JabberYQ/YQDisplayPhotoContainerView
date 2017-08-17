@@ -188,10 +188,18 @@ static const CGFloat kOnePhotoNormalMaxWidth = 180.0;
 
 - (void)imageViewTap:(UITapGestureRecognizer *)tap
 {
-    if (self.delegate && [self.delegate respondsToSelector:@selector(imageViewDidTap:)]) {
-        [self.delegate imageViewDidTap:self];
+    UIImageView *tapImageView = (UIImageView *)tap.view;
+    int tapIndex = 0;
+    for (int i = 0; i < self.imageViewArray.count; i++) {
+        if (tapImageView == self.imageViewArray[i]) {
+            tapIndex = i;
+            break;
+        }
     }
     
+    if (self.delegate && [self.delegate respondsToSelector:@selector(imageViewDidTap:tapImageView:tapIndex:)]) {
+        [self.delegate imageViewDidTap:self tapImageView:tapImageView tapIndex:tapIndex];
+    }
 }
 
 - (void)setPhotoArray:(NSArray *)photoArray

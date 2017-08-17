@@ -31,7 +31,14 @@ typedef NS_ENUM(NSUInteger, YQPhotoType) {
 
 @class YQDisplayPhotoContainerView;
 @protocol YQDisplayViewDelegate <NSObject>
-- (void)imageViewDidTap:(YQDisplayPhotoContainerView *)displayView;
+/**
+ 点击视图中的imageview后代理回调
+ 
+ @param displayView       自身
+ @param tapImageView      点击的imageview
+ @param tapIndex          imageview所在的index
+ */
+- (void)imageViewDidTap:(YQDisplayPhotoContainerView *)displayView tapImageView:(UIImageView *)tapImageView tapIndex:(int)tapIndex;
 @end
 
 @interface YQDisplayPhotoContainerView : UIView
